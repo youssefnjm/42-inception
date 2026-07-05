@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /var/www/html
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+COPY tools/index.php /usr/local/bin/index.php
+
 COPY tools/setup.sh /usr/local/bin/setup.sh
 RUN chmod +x /usr/local/bin/setup.sh
 
