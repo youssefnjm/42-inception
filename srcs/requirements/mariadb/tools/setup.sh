@@ -1,13 +1,15 @@
 #!/bin/bash 
 set -e
 
-# Create required runtime directories
-mkdir -p /var/lib/mysql
 mkdir -p /run/mysqld
-chown -R mysql:mysql /var/lib/mysql
 chown -R mysql:mysql /run/mysqld
 
 # Check if already initialized 
+# if [ ! -d /var/lib/mysql/mysql ]; then
+    echo "First run: initializing MariaDB..."
+
+    # Create system tables 
+    # mariadb-install-db --user=mysql --datadir=/var/lib/mysql
 
     # Start server temporarily in background 
     mysqld --user=mysql --datadir=/var/lib/mysql &
@@ -29,8 +31,7 @@ chown -R mysql:mysql /run/mysqld
 
     # Stop temporary server 
     kill $!
-    wait $!
-fi
+# fi
 
 # Start server in foreground as PID 1 
 echo "🟢 Starting MariaDB in foreground..."
