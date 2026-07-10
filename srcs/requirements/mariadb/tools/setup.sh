@@ -17,6 +17,7 @@ chown -R mysql:mysql /run/mysqld
     # Wait until server is ready 
     echo "Waiting for MariaDB to start..."
     until mysqladmin ping --silent; do
+        echo "MariaDB not ready yet. Retrying..."
         sleep 1
     done
     echo "MariaDB is ready!"
