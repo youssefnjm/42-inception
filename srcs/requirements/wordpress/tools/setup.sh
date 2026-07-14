@@ -33,7 +33,7 @@ else
 fi
 
 # Install WordPress if not already installed
-if [! wp core is-installed --allow-root]; then
+if ! wp core is-installed --allow-root ; then
     echo "Installing WordPress..."
     wp core install --allow-root \
         --url="ynoujoum.42.fr" \
@@ -49,7 +49,7 @@ if [! wp core is-installed --allow-root]; then
         --user_pass="editor_pass" \
         --role=editor
 else
-    echo "wordpress is file already present";
+    echo "wordpress file already present";
 fi
 
 # Copy test PHP file and set files owner
