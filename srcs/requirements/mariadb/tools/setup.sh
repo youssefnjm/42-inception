@@ -23,9 +23,9 @@ chown -R mysql:mysql /run/mysqld
     echo "MariaDB is ready!"
 
     # Create database and users 
-    mysql -u root -e "CREATE DATABASE IF NOT EXISTS wordpress;"
-    mysql -u root -e "CREATE USER IF NOT EXISTS 'wp_user'@'%' IDENTIFIED BY 'wp_pass';"
-    mysql -u root -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp_user'@'%';"
+    mysql -u root -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;"
+    mysql -u root -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
+    mysql -u root -e "GRANT ALL PRIVILEGES ON wordpress.* TO '$MYSQL_USER'@'%';"
     mysql -u root -e "FLUSH PRIVILEGES;"
 
     echo "Database and users created."

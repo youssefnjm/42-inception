@@ -24,10 +24,10 @@ fi
 if [ ! -f wp-config.php ]; then
     echo "Creating wp-config.php..."
     wp config create --allow-root \
-        --dbname=wordpress \
-        --dbuser=wp_user \
-        --dbpass=wp_pass \
-        --dbhost=mariadb
+        --dbname=$MYSQL_DATABASE \
+        --dbuser=$MYSQL_USER \
+        --dbpass=$MYSQL_PASSWORD \
+        --dbhost=$DB_HOST
 else
     echo "wp-config.php file already exist";
 fi
@@ -38,15 +38,15 @@ if ! wp core is-installed --allow-root ; then
     wp core install --allow-root \
         --url="ynoujoum.42.fr" \
         --title="Inception" \
-        --admin_user="boss" \
-        --admin_password="boss_pass" \
-        --admin_email="boss@42.fr" \
+        --admin_user=$WP_ADMIN \
+        --admin_password=$WP_ADMIN_EMAIL \
+        --admin_email=$WP_ADMIN_EMAIL \
         --skip-email
 
     echo "Creating second user..."
     wp user create --allow-root \
-        "editor" "editor@42.fr" \
-        --user_pass="editor_pass" \
+        $WP_USER $WP_USER_EMAIL \
+        --user_pass=$WP_USER_PASS \
         --role=editor
 else
     echo "wordpress file already present";
