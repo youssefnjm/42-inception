@@ -2,11 +2,11 @@
 
 set -e
 
-mkdir -p /var/www/html
+# mkdir -p /var/www/html
 mkdir -p /run/php
 
 echo "Waiting for MariaDB..."
-until mysqladmin ping -h mariadb -u wp_user -pwp_pass --silent; do
+until mysqladmin ping -h mariadb -u $MYSQL_USER -$MYSQL_PASSWORD --silent; do
     echo "MariaDB not ready yet. Retrying..."
     sleep 1
 done
@@ -39,7 +39,7 @@ if ! wp core is-installed --allow-root ; then
         --url="ynoujoum.42.fr" \
         --title="Inception" \
         --admin_user=$WP_ADMIN \
-        --admin_password=$WP_ADMIN_EMAIL \
+        --admin_password=$WP_ADMIN_PASS \
         --admin_email=$WP_ADMIN_EMAIL \
         --skip-email
 
