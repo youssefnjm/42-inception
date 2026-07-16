@@ -8,7 +8,7 @@ services:
       - inception-network
     env_file: 
       - .env
-    # restart: unless-stopped
+    # restart: on-failure
     depends_on: 
       - wordpress
 
@@ -21,11 +21,11 @@ services:
       - inception-network
     env_file: 
       - .env
-    # restart: unless-stopped
+    # restart: on-failure
     depends_on: 
       - mariadb
-    # volumes:
-    #   - wordpress_db:/var/www/html
+    volumes:
+      - wordpress_db:/var/www/html
 
   mariadb:
     container_name: mariadb
@@ -36,24 +36,24 @@ services:
       - inception-network
     env_file: 
       - .env
-    # restart: unless-stopped
-    # volumes:
-    #   - mariadb_db:/var/lib/mysql
+    # restart: on-failure
+    volumes:
+      - mysql_db:/var/lib/mysql
 
 networks:
   inception-network:
     driver: bridge
 
-# volumes:
-#   wordpress_db:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: /home/ynoujoum/data/wordpress_db
-#   mariadb_db:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: /home/ynoujoum/data/mariadb_db
+volumes:
+  wordpress_db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ynoujoum/data/wordpress_db
+  mysql_db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ynoujoum/data/mysql_db
