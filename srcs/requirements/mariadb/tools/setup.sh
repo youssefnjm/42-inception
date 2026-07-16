@@ -5,6 +5,8 @@ set -e
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 
+MYSQL_PASS=$(cat /run/secrets/MYSQL_PASS)
+
 # Check if already initialized 
 if [ ! -d /var/lib/mysql/mysql ]; then
     echo "🟡 First run: initializing MariaDB..."
@@ -25,7 +27,7 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 
     # Create database and users 
     mysql -u root -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;"
-    mysql -u root -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
+    mysql -u root -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASS';"
     mysql -u root -e "GRANT ALL PRIVILEGES ON wordpress.* TO '$MYSQL_USER'@'%';"
     mysql -u root -e "FLUSH PRIVILEGES;"
 

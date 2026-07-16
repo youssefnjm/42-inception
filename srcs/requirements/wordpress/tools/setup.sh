@@ -5,8 +5,12 @@ set -e
 # mkdir -p /var/www/html
 mkdir -p /run/php
 
+MYSQL_PASS=$(cat /run/secrets/MYSQL_PASS)
+WP_ADMIN_PASS=$(cat /run/secrets/WP_ADMIN_PASS)
+WP_USER_PASS=$(cat /run/secrets/WP_USER_PASS)
+
 echo "🟡 Waiting for MariaDB..."
-until mysqladmin ping -h mariadb -u $MYSQL_USER -p$MYSQL_PASSWORD --silent; do
+until mysqladmin ping -h mariadb -u $MYSQL_USER -p$MYSQL_PASS --silent; do
     echo "MariaDB not ready yet. Retrying..."
     sleep 1
 done
@@ -26,7 +30,7 @@ if [ ! -f wp-config.php ]; then
     wp config create --allow-root \
         --dbname=$MYSQL_DATABASE \
         --dbuser=$MYSQL_USER \
-        --dbpass=$MYSQL_PASSWORD \
+        --dbpass=$MYSQL_PASS \
         --dbhost=$DB_HOST
 else
     echo "🟡 wp-config.php file already exist";
