@@ -11,6 +11,8 @@ services:
     # restart: on-failure
     depends_on: 
       - wordpress
+    volumes:
+      - wordpress_db:/var/www/html
 
   wordpress:
     container_name: wordpress
